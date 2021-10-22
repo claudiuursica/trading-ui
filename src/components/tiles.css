@@ -1,0 +1,22 @@
+.tile-workspace {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tile {
+  border: 1px solid silver;
+  margin: 4px;
+  width: 200px;
+  padding: 4px;
+}
+
+.tile h1 {
+  font-size: medium;
+}
+
+.tile .close-btn {
+  float: right;
+}
+
+.price {
+}
