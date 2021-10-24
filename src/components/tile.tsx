@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { TileModel, StreamingPrice } from "../lib/model";
 import { Price } from "./price";
 import subscribeToRateStream from "../lib/rates-api";
-import { executeTrade, TradeRequest } from "../lib/trade-api";
+import { executeTrade, TradeRequest, TradeResponse } from "../lib/trade-api";
 import { createDeleteAction } from "../store/actions";
 import { useDispatch } from "react-redux";
 
@@ -17,8 +17,8 @@ export const Tile: React.FC<TileProps> = ({ tile }) => {
 
   useEffect(() => {
     const unsubscribe = subscribeToRateStream(
-      tile.base.code,
-      tile.terms.code,
+      tile.ccy1.code,
+      tile.ccy2.code,
       (price) => {
         setPrice(price);
       }
@@ -34,19 +34,17 @@ export const Tile: React.FC<TileProps> = ({ tile }) => {
     dispatch(createDeleteAction(id));
   };
 
-  const executeTradeClick = () => {
+  const handleTradeRequest = () => {
     const req: TradeRequest = {
-      tradeType: "SPT"
+      tradeType: "MARKET"
     };
 
-    executeTrade(req).then((res) => {
-      // TODO: Use typescript to guarantee that req.tradeType always
-      // matches the res.tradeType, eliminating the need
-      // for this check
-      if (res.tradeType !== req.tradeType) {
+    executeTrade(req).then((result: TradeResponse) => {
+      const { status, tradeType } = result;
+      if (status !== "SUCCESS") {
         throw new Error("Wrong trade type received");
       } else {
-        alert(`${res.tradeType} Trade Successful`);
+        alert(`${tradeType} Trade Successful`);
       }
     });
   };
@@ -57,11 +55,11 @@ export const Tile: React.FC<TileProps> = ({ tile }) => {
         X
       </button>
       <h1>
-        {tile.base.name}/{tile.terms.name}
+        {tile.ccy1.name}/{tile.ccy2.name}
       </h1>
 
       <Price price={price} dps={tile.dps} />
-      <button type="button" onClick={executeTradeClick}>
+      <button type="button" onClick={handleTradeRequest}>
         Trade SPT
       </button>
     </div>

@@ -1,18 +1,26 @@
+export type TradeType = "MARKET" | "LIMIT" | "STOP";
+
 export interface TradeRequest {
-  tradeType: string; //Can be "SPT" or "FWD"
+  tradeType: TradeType;
 }
+
+export type TradeResponseStatus = "SUCCESS" | "ERROR";
 
 export interface TradeResponse {
-  tradeType: string; //Can be "SPT" or "FWD"
+  status: TradeResponseStatus;
+  tradeType: TradeType;
 }
 
-export function executeTrade(trade: TradeRequest): Promise<TradeResponse> {
+export function executeTrade(
+  tradeRequest: TradeRequest
+): Promise<TradeResponse> {
+  const { tradeType } = tradeRequest;
   return new Promise((res) => {
     setTimeout(
       () =>
         res({
-          // With correct types typescript should flag this as the bug
-          tradeType: "FWD"
+          status: "SUCCESS",
+          tradeType
         }),
       1000
     );

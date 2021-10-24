@@ -5,9 +5,9 @@ import { DELETE_TILE } from "./actions";
 const initialState = {
   currencies: CURRENCIES,
   currencyPairs: CURRENCY_PAIRS,
-  tiles: CURRENCY_PAIRS.map((cp) => ({
-    ...cp,
-    id: `${cp.base}${cp.terms}`
+  tiles: CURRENCY_PAIRS.map((currencyPair) => ({
+    ...currencyPair,
+    id: `${currencyPair.ccy1}${currencyPair.ccy2}`
   }))
 };
 

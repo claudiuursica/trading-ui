@@ -30,8 +30,8 @@ export const CURRENCIES: { [code in CurrencyCode]: Currency } = {
 };
 
 export interface CurrencyPair {
-  base: keyof typeof CURRENCIES;
-  terms: keyof typeof CURRENCIES;
+  ccy1: keyof typeof CURRENCIES;
+  ccy2: keyof typeof CURRENCIES;
   dps: number;
 }
 
@@ -40,14 +40,14 @@ export function isCcyPair(obj: any): obj is CurrencyPair {
 }
 
 export const CURRENCY_PAIRS: CurrencyPair[] = [
-  { base: "gbp", terms: "usd", dps: 4 },
-  { base: "eur", terms: "usd", dps: 4 },
-  { base: "eur", terms: "gbp", dps: 4 }
+  { ccy1: "gbp", ccy2: "usd", dps: 4 },
+  { ccy1: "eur", ccy2: "usd", dps: 4 },
+  { ccy1: "eur", ccy2: "gbp", dps: 4 }
 ];
 
 export interface TileModel {
   id: string;
-  base: Currency;
-  terms: Currency;
+  ccy1: Currency;
+  ccy2: Currency;
   dps: number;
 }

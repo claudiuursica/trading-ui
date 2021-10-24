@@ -13,8 +13,8 @@ export const selectTiles = createSelector(
       (cp) =>
         ({
           id: cp.id,
-          base: ccy[cp.base],
-          terms: ccy[cp.terms],
+          ccy1: ccy[cp.ccy1],
+          ccy2: ccy[cp.ccy2],
           dps: cp.dps
         } as TileModel)
     )
